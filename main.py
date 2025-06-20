@@ -5,6 +5,11 @@ value = {0: "Rock", 1: "Paper", 2: "Scissors"}
 
 st.title("🪨 Rock - 📄 Paper - ✂️ Scissors Game")
 
+if "user_score" not in st.session_state:
+    st.session_state.user_score = 0
+if "computer_score" not in st.session_state:
+    st.session_state.computer_score = 0
+
 user_choice = st.radio("Choose your move:", ["Rock", "Paper", "Scissors"])
 
 if st.button("Play"):
@@ -20,5 +25,10 @@ if st.button("Play"):
          (user_index == 1 and computer_index == 0) or \
          (user_index == 2 and computer_index == 1):
         st.success("🎉 You Win!")
+        st.session_state.user_score += 1
     else:
         st.error("😢 You Lose!")
+        st.session_state.computer_score += 1
+
+    st.write(f"### Scoreboard")
+    st.write(f"🧑 You: {st.session_state.user_score}  |  🤖 Computer: {st.session_state.computer_score}")
