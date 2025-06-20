@@ -1,52 +1,23 @@
+import streamlit as st
 import random
 
-value = {
-    0: "Rock",
-    1: "Paper",
-    2: "Scissors"
-}
+value = {0: "Rock", 1: "Paper", 2: "Scissors"}
 
-# Skorlar
-user_score = 0
-computer_score = 0
-draws = 0
-turn = 1  # kaçıncı turda olduğumuzu takip eder
+st.title("🪨 Rock - 📄 Paper - ✂️ Scissors Game")
 
-while True:
-    try:
-        RPS = int(input(f"\nRound {turn} - What do you choose?\nType 0 for Rock, 1 for Paper, 2 for Scissors:\n"))
-        if RPS not in [0, 1, 2]:
-            print("Enter a number between 0 and 2.")
-            continue
+user_choice = st.radio("Choose your move:", ["Rock", "Paper", "Scissors"])
+if st.button("Play"):
+    user_index = ["Rock", "Paper", "Scissors"].index(user_choice)
+    computer_index = random.randint(0, 2)
 
-        choice = random.randint(0, 2)
+    st.write(f"🤖 Computer chose: {value[computer_index]}")
+    st.write(f"🧑 You chose: {user_choice}")
 
-        print(f"\nComputer chose: {value[choice]}\nYour choice: {value[RPS]}")
-
-        if RPS == choice:
-            print("Draw")
-            draws += 1
-        elif (RPS == 0 and choice == 2) or (RPS == 1 and choice == 0) or (RPS == 2 and choice == 1):
-            print("You Win")
-            user_score += 1
-        else:
-            print("You Lose")
-            computer_score += 1
-
-        # Her 11 turda bir kullanıcıya devam etmek istiyor mu diye sor
-        if turn % 11 == 0:
-            again = input("\nDo you want to continue playing? (yes/no): ").strip().lower()
-            if again == "no":
-                print("\n🧾 Final Score:")
-                print(f"You: {user_score}")
-                print(f"Computer: {computer_score}")
-                print(f"Draws: {draws}")
-                print("Thanks for playing!")
-                break
-            elif again != "yes":
-                print("Invalid input. Continuing by default...")
-
-        turn += 1
-
-    except ValueError:
-        print("Invalid input. Please enter a number.")
+    if user_index == computer_index:
+        st.info("🤝 Draw!")
+    elif (user_index == 0 and computer_index == 2) or \
+         (user_index == 1 and computer_index == 0) or \
+         (user_index == 2 and computer_index == 1):
+        st.success("🎉 You Win!")
+    else:
+        st.error("😢 You Lose!")
