@@ -6,6 +6,7 @@ value = {0: "Rock", 1: "Paper", 2: "Scissors"}
 st.title("🪨 Rock - 📄 Paper - ✂️ Scissors Game")
 
 user_choice = st.radio("Choose your move:", ["Rock", "Paper", "Scissors"])
+
 if st.button("Play"):
     user_index = ["Rock", "Paper", "Scissors"].index(user_choice)
     computer_index = random.randint(0, 2)
